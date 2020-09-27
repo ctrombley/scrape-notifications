@@ -1,13 +1,13 @@
 const cron = require('node-cron');
 const newrelic = require('newrelic');
-const logger = require('./log');
 
-config = require('./config');
-notifications = require('./notifications');
-Scraper = require('./scraper');
+const logger = require('./log');
+const config = require('./config');
+const notifications = require('./notifications');
+const Scraper = require('./scraper');
 
 logger.info('Starting scrape server.');
-scraper = new Scraper(config);
+const scraper = new Scraper(config);
 
 process.on('SIGINT', function () {
   logger.info('Caught interrupt signal, exiting.');
@@ -21,14 +21,16 @@ cron.schedule(config.schedule, () => {
   scraper
     .scrape()
     .then((output) => {
-      if (!output.length) {
-        return;
-      }
-
       logger.info('Scrape completed.', {
         output: output,
       });
 
+      if (!output.length) {
+        logger.info('No results found.');
+        return;
+      }
+
+      logger.info(`${output.length} results found. Sending push notification.`);
       notifications.send(output.join('\n'));
     })
     .catch((err) => {
