@@ -1,14 +1,28 @@
-const YAML = require('yaml');
-const fs = require('fs');
+const cron = require('node-cron');
 
+logger = require('./log');
+config = require('./config');
 notifications = require('./notifications');
-Scraper = require('./scraper.js');
+Scraper = require('./scraper');
 
-const file = fs.readFileSync('./config.yaml', 'utf8');
-const config = YAML.parse(file);
-
+logger.info('Starting scrape server.');
 scraper = new Scraper(config);
-scraper.scrape().then((output) => {
-  console.log(output);
-  notifications.send(output.join('\n'));
+cron.schedule(config.schedule, () => {
+  console.log('Running scrape job.');
+  scraper
+    .scrape()
+    .then((output) => {
+      if (!output.length) {
+        return;
+      }
+
+      logger.info('Scrape completed.', {
+        output: output,
+      });
+
+      notifications.send(output.join('\n'));
+    })
+    .catch((err) => {
+      logger.error(err);
+    });
 });

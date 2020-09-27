@@ -1,5 +1,7 @@
 axios = require('axios');
 
+logger = require('./log');
+
 function send(message) {
   const req = axios
     .post('https://api.pushed.co/1/push', {
@@ -9,10 +11,10 @@ function send(message) {
       content: message,
     })
     .then((res) => {
-      //console.debug(res);
+      logger.debug('Received response from pushed.co', { res: res });
     })
     .catch((err) => {
-      console.error(err);
+      throw new Error(err);
     });
 }
 

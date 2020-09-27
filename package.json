@@ -11,6 +11,9 @@
   "dependencies": {
     "axios": "^0.20.0",
     "jsdom": "^16.4.0",
+    "newrelic": "^6.13.1",
+    "node-cron": "^2.0.3",
+    "winston": "^3.3.3",
     "yaml": "^1.10.0"
   }
 }
