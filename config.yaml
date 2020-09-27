@@ -1,0 +1,8 @@
+searchTerms: ['J-45', 'J-50']
+items:
+  - store: 'Thunder Road'
+    url: 'https://www.thunderroadguitars.com/category/acoustic-guitars/'
+    pattern: '.product-title'
+  - store: 'Strum'
+    url: 'https://strumpdx.com/p-cat/guitars/acoustic-guitars/?filtering=1&filter_product_brand=85'
+    pattern: '.woocommerce-loop-product__title a'
