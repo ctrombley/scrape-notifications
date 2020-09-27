@@ -15,28 +15,31 @@ process.on('SIGINT', function () {
 });
 
 cron.schedule(config.schedule, () => {
-  newrelic.startBackgroundTransaction('scrape');
+  newrelic.startBackgroundTransaction('scrape', () => {
+    const transaction = newrelic.getTransaction();
+    logger.info('Running scrape job.');
+    scraper
+      .scrape()
+      .then((output) => {
+        logger.info('Scrape completed.', {
+          output: output,
+        });
 
-  logger.info('Running scrape job.');
-  scraper
-    .scrape()
-    .then((output) => {
-      logger.info('Scrape completed.', {
-        output: output,
+        if (!output.length) {
+          logger.info('No results found.');
+          return;
+        }
+
+        logger.info(
+          `${output.length} results found. Sending push notification.`,
+        );
+        notifications.send(output.join('\n'));
+      })
+      .catch((err) => {
+        logger.error(err);
+      })
+      .finally(() => {
+        transaction.end();
       });
-
-      if (!output.length) {
-        logger.info('No results found.');
-        return;
-      }
-
-      logger.info(`${output.length} results found. Sending push notification.`);
-      notifications.send(output.join('\n'));
-    })
-    .catch((err) => {
-      logger.error(err);
-    })
-    .finally(() => {
-      newrelic.endTransaction();
-    });
+  });
 });
