@@ -1,6 +1,7 @@
 const cron = require('node-cron');
 const newrelic = require('newrelic');
 
+require('./healthcheck');
 const logger = require('./log');
 const config = require('./config');
 const notifications = require('./notifications');
