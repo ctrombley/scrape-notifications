@@ -1,5 +1,5 @@
 logLevel: 'info'
-schedule: '* * * * *'
+schedule: '0 9 * * *'
 searchTerms: ['J-45', 'J-50']
 items:
   - store: 'Thunder Road'
