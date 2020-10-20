@@ -1,6 +1,6 @@
 logLevel: 'info'
-schedule: '0 9 * * *'
-searchTerms: ['J-45', 'J-50']
+schedule: '0 21 * * *'
+searchTerms: ['J-45', 'J45', 'J-50', 'J50' '335', 'AC15', 'AC15']
 items:
   - store: 'Thunder Road'
     url: 'https://www.thunderroadguitars.com/category/acoustic-guitars/'
