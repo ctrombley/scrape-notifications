@@ -1,10 +1,13 @@
 logLevel: 'info'
 schedule: '0 21 * * *'
-searchTerms: ['J-45', 'J45', 'J-50', 'J50' '335', 'AC15', 'AC15']
+searchTerms: ['J-45', 'J45', 'J-50', 'J50', '335', 'AC15', 'AC15']
 items:
   - store: 'Thunder Road'
     url: 'https://www.thunderroadguitars.com/category/acoustic-guitars/'
     pattern: '.product-title'
+  - store: 'Thunder Road'
+    url: 'https://www.thunderroadguitars.com/category/electric-guitars/'
+    pattern: '.product-title'
   - store: 'Strum'
-    url: 'https://strumpdx.com/p-cat/guitars/acoustic-guitars/?filtering=1&filter_product_brand=85'
+    url: 'https://strumpdx.com/p-cat/guitars/?filtering=1&filter_product_brand=76,85,161,146,86'
     pattern: '.woocommerce-loop-product__title a'

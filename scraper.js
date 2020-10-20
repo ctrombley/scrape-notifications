@@ -1,4 +1,5 @@
 const jsdom = require('jsdom');
+const logger = require('./log');
 const { JSDOM } = jsdom;
 
 class Scraper {
@@ -31,6 +32,7 @@ class Scraper {
   }
 
   _scrapeItem(item) {
+    logger.debug(`Scraping ${item.url}`);
     return axios
       .get(item.url)
       .then((res) => {
